@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		963DB9EE27DF661C00F32712 /* TimeDateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963DB9ED27DF661C00F32712 /* TimeDateData.swift */; };
+		9668D26127DF2B8A008E7C78 /* TimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9668D26027DF2B8A008E7C78 /* TimeCell.xib */; };
+		9668D26327DF2CED008E7C78 /* TimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9668D26227DF2CED008E7C78 /* TimeCell.swift */; };
+		9668D26527DF2E25008E7C78 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9668D26427DF2E25008E7C78 /* TableViewController.swift */; };
 		9669FC8F27DF2B1600C2E602 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9669FC8E27DF2B1600C2E602 /* AppDelegate.swift */; };
 		9669FC9127DF2B1600C2E602 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9669FC9027DF2B1600C2E602 /* SceneDelegate.swift */; };
 		9669FC9327DF2B1600C2E602 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9669FC9227DF2B1600C2E602 /* ViewController.swift */; };
@@ -16,6 +20,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		963DB9ED27DF661C00F32712 /* TimeDateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDateData.swift; sourceTree = "<group>"; };
+		9668D26027DF2B8A008E7C78 /* TimeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeCell.xib; sourceTree = "<group>"; };
+		9668D26227DF2CED008E7C78 /* TimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCell.swift; sourceTree = "<group>"; };
+		9668D26427DF2E25008E7C78 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		9669FC8B27DF2B1600C2E602 /* WaterAlarmNotification.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WaterAlarmNotification.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9669FC8E27DF2B1600C2E602 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9669FC9027DF2B1600C2E602 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -37,6 +45,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		963DB9EF27E1F2F400F32712 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				9668D26427DF2E25008E7C78 /* TableViewController.swift */,
+				9669FC9227DF2B1600C2E602 /* ViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		963DB9F027E1F30400F32712 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				963DB9ED27DF661C00F32712 /* TimeDateData.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		963DB9F227E1F31400F32712 /* StroyBoard */ = {
+			isa = PBXGroup;
+			children = (
+				9669FC9427DF2B1600C2E602 /* Main.storyboard */,
+				9668D26027DF2B8A008E7C78 /* TimeCell.xib */,
+				9668D26227DF2CED008E7C78 /* TimeCell.swift */,
+				9669FC9927DF2B1800C2E602 /* LaunchScreen.storyboard */,
+			);
+			path = StroyBoard;
+			sourceTree = "<group>";
+		};
 		9669FC8227DF2B1600C2E602 = {
 			isa = PBXGroup;
 			children = (
@@ -58,10 +94,10 @@
 			children = (
 				9669FC8E27DF2B1600C2E602 /* AppDelegate.swift */,
 				9669FC9027DF2B1600C2E602 /* SceneDelegate.swift */,
-				9669FC9227DF2B1600C2E602 /* ViewController.swift */,
-				9669FC9427DF2B1600C2E602 /* Main.storyboard */,
+				963DB9EF27E1F2F400F32712 /* ViewController */,
+				963DB9F027E1F30400F32712 /* Data */,
+				963DB9F227E1F31400F32712 /* StroyBoard */,
 				9669FC9727DF2B1800C2E602 /* Assets.xcassets */,
-				9669FC9927DF2B1800C2E602 /* LaunchScreen.storyboard */,
 				9669FC9C27DF2B1800C2E602 /* Info.plist */,
 			);
 			path = WaterAlarmNotification;
@@ -125,6 +161,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9668D26127DF2B8A008E7C78 /* TimeCell.xib in Resources */,
 				9669FC9B27DF2B1800C2E602 /* LaunchScreen.storyboard in Resources */,
 				9669FC9827DF2B1800C2E602 /* Assets.xcassets in Resources */,
 				9669FC9627DF2B1600C2E602 /* Main.storyboard in Resources */,
@@ -138,8 +175,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9668D26327DF2CED008E7C78 /* TimeCell.swift in Sources */,
 				9669FC9327DF2B1600C2E602 /* ViewController.swift in Sources */,
 				9669FC8F27DF2B1600C2E602 /* AppDelegate.swift in Sources */,
+				9668D26527DF2E25008E7C78 /* TableViewController.swift in Sources */,
+				963DB9EE27DF661C00F32712 /* TimeDateData.swift in Sources */,
 				9669FC9127DF2B1600C2E602 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
