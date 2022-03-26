@@ -14,27 +14,32 @@ class TimeCell: UITableViewCell{
     @IBOutlet weak var toggle: UISwitch!
     @IBOutlet weak var time: UILabel!
     var uuid: String?
+    var count: Int = 0
+    var year: String?
     var cellData: TimeDateData? {
         didSet{
             self.uuid = cellData?.uuid
             self.amORpm.text = cellData?.amORpm
-            self.toggle.isOn = cellData?.isSelected ?? false
             self.time.text = cellData?.time
+            self.year = cellData?.year_Month_Day
+            self.toggle.setOn(cellData?.isSelected ?? false, animated: true)
+            print("cellData didset called")
+           
         }
     }
     override func awakeFromNib() {
         super.awakeFromNib()
         debugPrint("TimeCell - awakeFromNib called")
-        toggle.addTarget(self, action: #selector(clickedToggle(_ :)), for: .valueChanged)
-        
+        toggle.addTarget(self, action: #selector(clickedToggle(_ :)), for: .touchUpInside)
     }
     
     @objc func clickedToggle(_ sender: UISwitch){
-        let value = sender.isOn
-        cellData?.isSelected = value
+        self.cellData?.isSelected = sender.isOn
+        print("clicekdToggle called")
         NotificationCenter.default.post(
             name: NSNotification.Name(rawValue: "AlarmONoff"),
             object: cellData)
+      
     }
     
 }
