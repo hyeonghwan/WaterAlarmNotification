@@ -11,13 +11,12 @@ import UserNotifications
  @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
  
-    var notification: UNUserNotificationCenter?
+    let un = UNUserNotificationCenter.current()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.sound, .badge, .alert], completionHandler: { granted , error in
+        
+        un.requestAuthorization(options: [.sound, .badge, .alert], completionHandler: { granted , error in
             if let err = error {
                 print(err)
             }
