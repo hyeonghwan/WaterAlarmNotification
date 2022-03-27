@@ -9,6 +9,7 @@ class TableViewController: UITableViewController {
         didSet{
             print("tableDateData - didset - called")
             self.saveTableData()
+            print(1111)
         }
     }
     
