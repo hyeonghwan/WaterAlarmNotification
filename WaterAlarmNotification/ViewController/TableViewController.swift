@@ -9,10 +9,7 @@ class TableViewController: UITableViewController {
     var tableDateData: [TimeDateData] = []{
         didSet(oldval){
             self.saveTableData()
-            print(tableDateData)
-        }
-        willSet(newVal){
-         
+            print(1111)
         }
     }
     
