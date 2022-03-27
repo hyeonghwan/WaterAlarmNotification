@@ -5,9 +5,11 @@ import UIKit
 class TableViewController: UITableViewController {
     @IBOutlet weak var alarmAddButton: UIBarButtonItem!
     let appdelegate = UIApplication.shared.delegate as! AppDelegate
+    
     var tableDateData: [TimeDateData] = []{
         didSet(oldval){
             self.saveTableData()
+            print(tableDateData)
         }
         willSet(newVal){
          
@@ -16,8 +18,6 @@ class TableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-    
         let nib = UINib(nibName: "TimeCell", bundle: nil)
         debugPrint("tableViewController - viewdidload - called")
         tableView.register(nib, forCellReuseIdentifier: "TimeCell")
@@ -78,55 +78,18 @@ class TableViewController: UITableViewController {
         guard let index = tableDateData.firstIndex(where: { $0.uuid == timeData.uuid}) else {return}
         let notifyRequestBool = timeData.isSelected
         self.tableDateData[index].isSelected = notifyRequestBool
-        print(self.tableDateData)
         switch notifyRequestBool {
             
         case true:
-            self.addUNnotification(timeData.uuid)
+            self.appdelegate.un.addUNnotification(timeData.uuid, tableDateData)
             break
             
         case false:
-            
+            self.appdelegate.un.removeUNnotification(timeData.uuid)
             break
-
         }
-        
     }
     
-    //MARK: - unNotification func
-    fileprivate func addUNnotification(_ uuid: String) {
-        let un = self.appdelegate.un
-        un.getNotificationSettings { (setting) in
-            if setting.authorizationStatus == .authorized {
-                let content = UNMutableNotificationContent()
-                content.title = "Time to Drink Water!"
-                content.subtitle = "물마실 시간입니다!"
-                content.body = "하루를 시작해 볼까요!"
-                content.sound = UNNotificationSound.default
-                content.badge = 1
-            
-                let url2 = AssetExtractor.createLocalUrl(forImageNamed: "신분증")
-                do{
-                    let attachment = try UNNotificationAttachment(identifier: "Test", url: url2!)
-                    content.attachments = [attachment]
-                }catch let error{
-                    print(error.localizedDescription)
-                }
-                var date = DateComponents()
-                guard let index = self.tableDateData.firstIndex(where: { $0.uuid == uuid}) else {return}
-                let time = self.tableDateData[index].time.split(separator: ":").map{Int($0)!}
-                date.hour = time[0]
-                date.minute = time[1]
-                let timeTrigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
-                
-                let request = UNNotificationRequest(identifier: uuid, content: content, trigger: timeTrigger)
-                un.add(request) { error in
-                    if error != nil {print(error?.localizedDescription as Any)}
-                }
-            }
-            
-        }
-    }
 
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -165,51 +128,15 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCell.EditingStyle.delete {
             print("delete")
-               tableDateData.remove(at: indexPath.row)
-           }
+            // 알람이 활성화 상태일경우 삭제했을경우 알람이 활성화 상태일때
+            // UNnotification 을 삭제 한후 테이블 데이터 에서 삭제
+            let removedTableData = self.tableDateData.remove(at: indexPath.row)
+            if removedTableData.isSelected == true {
+                self.appdelegate.un.removeUNnotification(removedTableData.uuid)
+            }
+            self.tableView.reloadData()
+        }
     }
    
 }
-extension TableViewController: DateSendDelegate{
-    
-    func sendDate(_ data: String) {
-        print("TableViewController - sendDate \(data)")
-        let convertedData = convertDateToStruct(data)
-        self.tableDateData.append(convertedData)
-        self.tableView.reloadData()
-    }
-    fileprivate func convertDateToStruct(_ data: String) -> TimeDateData {
-        let str = data.split(separator: "T").map{String($0)}
-        let yymmdd = str.first!
-        let timeAndAmOrPm = str.last!.split(separator: " ").map{String($0)}
-        let uuid = UUID().uuidString
-        let convertData = TimeDateData(uuid: uuid,year_Month_Day: yymmdd, time: timeAndAmOrPm[0], amORpm: timeAndAmOrPm[1], isSelected: false)
-        return convertData
-    }
-}
 
-
-//MARK: - 이미지 추출 클래스
-class AssetExtractor {
-
-    static func createLocalUrl(forImageNamed name: String) -> URL? {
-
-        let fileManager = FileManager.default
-        let cacheDirectory = fileManager.urls(for: .cachesDirectory, in: .userDomainMask)[0]
-        let url = cacheDirectory.appendingPathComponent("\(name).png")
-
-        guard fileManager.fileExists(atPath: url.path) else {
-            guard
-                let image = UIImage(named: name),
-                let data = image.pngData()
-            else { return nil }
-
-            fileManager.createFile(atPath: url.path, contents: data, attributes: nil)
-            print("not 신분증")
-            return url
-        }
-        print("exist 신분증")
-        return url
-    }
-
-}
